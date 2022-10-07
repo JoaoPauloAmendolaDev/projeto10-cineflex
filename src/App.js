@@ -15,8 +15,8 @@ export default function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Page1 />} />
-        <Route path="/filme/:idFilme" element={<Page2 />} />
-        <Route path="/sessao/:idSessao" element={<Page3 />} />
+        <Route path="/sessoes/:idFilme" element={<Page2 />} />
+        <Route path="/assentos/:idSessao" element={<Page3 />} />
         <Route path="/sucesso" element={<Page4 />} />
       </Routes>
     </BrowserRouter>

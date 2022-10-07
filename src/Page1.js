@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
 
 export default function Page1() {
   const [getData, setGetData] = useState(false);
@@ -17,7 +19,6 @@ export default function Page1() {
     setGetData(valor);
     setFilmList(moviesList.data);
     console.log(moviesList.data);
-    return <></>;
   }
 
   function fail(error) {
@@ -26,17 +27,17 @@ export default function Page1() {
 
   return (
     <Body1>
-      <Title>
-        <p>CINEFLEX</p>
-      </Title>
+      <NavBar />
       <SubTitle>
         <p>Selecione o filme</p>
       </SubTitle>
       <Films>
         {filmList.map((e) => {
           return (
-            <Film>
-              <img src={e.posterURL} />
+            <Film key={e.id}>
+              <Link to={`/sessoes/${e.id}`}>
+                <img src={e.posterURL} />
+              </Link>
             </Film>
           );
         })}
@@ -51,18 +52,6 @@ const Body1 = styled.div`
   * {
     box-sizing: border-box;
   }
-`;
-
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #c3cfd9;
-  color: #e8833a;
-  font-family: "ROBOTO";
-  font-size: 35px;
-  font-weight: 400;
-  height: 67px;
 `;
 
 const SubTitle = styled.div`
@@ -94,7 +83,7 @@ const Film = styled.div`
 
   img {
     width: 129px;
-    heigth: 193px;
+    height: 193px;
     box-shadow: 0px 2px 4px 2px #0000001a;
     border-radius: 4px;
   }
