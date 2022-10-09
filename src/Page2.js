@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 import styled from "styled-components";
 
-
 export default function Page2() {
   let { idFilme } = useParams();
   const [session, setSession] = useState([]);
