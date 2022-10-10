@@ -34,7 +34,7 @@ export default function Page1() {
       <Films>
         {filmList.map((e) => {
           return (
-            <Film key={e.id}>
+            <Film key={e.id} data-identifier="movie-outdoor">
               <Link to={`/sessoes/${e.id}`}>
                 <img src={e.posterURL} />
               </Link>

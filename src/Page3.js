@@ -5,8 +5,8 @@ import styled from "styled-components";
 import NavBar from "./NavBar";
 
 export let clientChoice;
-export let assentsChoice = []
-export let movieAndSession
+export let assentsChoice = [];
+export let movieAndSession;
 
 export default function Page3() {
   const [sits, setSits] = useState([]);
@@ -21,7 +21,7 @@ export default function Page3() {
       .get(
         `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`
       )
-      .then((e) => confirmFilm(e.data) )
+      .then((e) => confirmFilm(e.data))
       .catch((e) => fail(e));
   }, []);
 
@@ -43,15 +43,15 @@ export default function Page3() {
     alert("O assento já foi selecionado, por favor, escolha um disponível.");
   }
 
-  function confirmFilm(value){
-    setSits([value])
-    console.log(value)
+  function confirmFilm(value) {
+    setSits([value]);
+    console.log(value);
     movieAndSession = {
-      day: value.day.date, 
+      day: value.day.date,
       filmName: value.movie.title,
-      hour: value.name
-    }
-    console.log(movieAndSession)
+      hour: value.name,
+    };
+    console.log(movieAndSession);
   }
 
   function post() {
@@ -66,7 +66,6 @@ export default function Page3() {
       name: nameValue,
       cpf: cpfValue,
     };
-    
 
     console.log(clientChoice);
     axios
@@ -90,19 +89,16 @@ export default function Page3() {
         <>
           <Chair>
             {e.seats.map((newValue) => (
-              
               <div
+                data-identifier="seat"
                 key={newValue.id}
-                
                 onClick={() =>
-                  
                   newValue.isAvailable
                     ? setClickedValue(
-                      
                         [...clickedValue, newValue.name],
                         setClickedSeatID(() => [...clickedSeatID, newValue.id]),
-                        assentsChoice = [...assentsChoice, newValue.name]
-                        )
+                        (assentsChoice = [...assentsChoice, newValue.name])
+                      )
                     : wrongClick()
                 }
               >
@@ -112,16 +108,16 @@ export default function Page3() {
           </Chair>
 
           <Options>
-            <Button>
+            <Button data-identifier="seat-selected-subtitle">
               <p>SELECIONADO</p>
               <IndividualSitSelected></IndividualSitSelected>
             </Button>
-            <Button>
+            <Button data-identifier="seat-available-subtitle">
               <p>DISPONÍVEL</p>
               <IndividualSitOk></IndividualSitOk>
             </Button>
 
-            <Button>
+            <Button data-identifier="seat-unavailable-subtitle">
               <p>INDISPONÍVEL</p>
               <IndividualSitNotOk></IndividualSitNotOk>
             </Button>
@@ -130,6 +126,7 @@ export default function Page3() {
             <div>
               <p>Nome do comprador:</p>
               <input
+                data-identifier="buyer-name-input"
                 onChange={(e) => setNameValue(e.target.value)}
                 id="name"
                 type="text"
@@ -140,6 +137,7 @@ export default function Page3() {
             <div>
               <p>CPF do comprador:</p>
               <input
+                data-identifier="buyer-cpf-input"
                 onChange={(e) => setCpfValue(e.target.value)}
                 id="cpf"
                 type="text"
@@ -150,7 +148,7 @@ export default function Page3() {
           </Inputs>
           {clickedSeatID.length !== 0 && nameValue !== "" && cpfValue !== "" ? (
             <Link to="/sucesso">
-              <Post onClick={() => post()}>
+              <Post onClick={() => post()} data-identifier="reservation-btn">
                 <p>Reservar assento(s)</p>
               </Post>
             </Link>
@@ -164,8 +162,8 @@ export default function Page3() {
             </Post>
           )}
 
-          <Footer>
-            <div id="movieDiv">
+          <Footer data-identifier="movie-and-session-infos-preview">
+            <div id="movieDiv" data-identifier="movie-img-preview">
               <img src={e.movie.posterURL} />
             </div>
             <FooterText>

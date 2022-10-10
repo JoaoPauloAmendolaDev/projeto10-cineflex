@@ -30,20 +30,20 @@ export default function Page2() {
           {e.days.map((newElement) => (
             <>
               {console.log(e.title)}
-              <Day key={newElement.id}>
+              <Day key={newElement.id} data-identifier="session-date">
                 {newElement.weekday} - {newElement.date}
               </Day>
               <HourContainer>
                 {newElement.showtimes.map((e) => (
                   <Link to={`/assentos/${e.id}`}>
-                    <Hour>{e.name} </Hour>
+                    <Hour data-identifier="hour-minute-btn">{e.name} </Hour>
                   </Link>
                 ))}
               </HourContainer>
             </>
           ))}
-          <Footer>
-            <div>
+          <Footer  data-identifier="movie-and-session-infos-preview">
+            <div data-identifier="movie-img-preview">
               <img src={e.posterURL} />{" "}
             </div>
             <p>{e.title}</p>

@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import { clientChoice } from "./Page3";
+import { clientChoice, movieAndSession, assentsChoice } from "./Page3";
 import NavBar from "./NavBar";
-import { useParams } from "react-router-dom";
-import { assentsChoice } from "./Page3";
-import { movieAndSession } from "./Page3";
+import { useParams, Link } from "react-router-dom";
 
 export default function Page4() {
-  console.log(clientChoice, assentsChoice);
+  function clear() {
+    clientChoice = "";
+    movieAndSession = "";
+    assentsChoice = [];
+  }
 
   return (
     <Body>
@@ -17,8 +19,10 @@ export default function Page4() {
       <Content>
         <ContentTitle>
           <p>Filme e Sessão</p>
-          <div>{movieAndSession.filmName} </div>{" "}
-          <div>
+          <div data-identifier="movie-session-infos-reserve-finished">
+            {movieAndSession.filmName}{" "}
+          </div>{" "}
+          <div data-identifier="movie-session-infos-reserve-finished">
             {" "}
             {movieAndSession.day} {movieAndSession.hour}{" "}
           </div>
@@ -30,7 +34,9 @@ export default function Page4() {
               ? "carregando"
               : assentsChoice.map((e) => (
                   <TicketList>
-                    <p>Assento {e}</p> 
+                    <p data-identifier="seat-infos-reserve-finished">
+                      Assento {e}
+                    </p>
                   </TicketList>
                 ))}
           </div>
@@ -38,8 +44,8 @@ export default function Page4() {
         </ContentTitle>
         <ContentTitle>
           <p>Comprador</p>
-          <div>
-            <Text>
+          <div data-identifier="buyer-infos-reserve-finished">
+            <Text data-identifier="buyer-infos-reserve-finished">
               Nome:{" "}
               {clientChoice === undefined ? "carregando" : clientChoice.name}
             </Text>
@@ -47,6 +53,11 @@ export default function Page4() {
           </div>
         </ContentTitle>
       </Content>
+      <Link to="/" onClick={() => clear()}>
+        <Home data-identifier="back-to-home-btn">
+          <p>Voltar para Home</p>
+        </Home>
+      </Link>
     </Body>
   );
 }
@@ -70,8 +81,8 @@ const SubTitle = styled.div`
   font-family: "Roboto";
   font-size: 24px;
   font-weight: 400;
-  p{
-    color: #247A6B;
+  p {
+    color: #247a6b;
   }
 `;
 
@@ -118,10 +129,30 @@ const TicketList = styled.div`
   font-weight: 400;
   line-height: 20px;
   color: #293845;
-  p{
-    font-family: 'Roboto';
+  p {
+    font-family: "Roboto";
     font-weight: 400;
   }
 `;
 
 const Text = styled.div``;
+
+const Home = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  margin: auto auto;
+  margin-top: 60px;
+  width: 225px;
+  height: 42px;
+  background-color: #e8833a;
+  border-radius: 10px;
+  p {
+    height: fit-content;
+    font-weight: 400;
+    font-size: 18px;
+    font-family: "Roboto";
+    color: #ffffff;
+  }
+`;
