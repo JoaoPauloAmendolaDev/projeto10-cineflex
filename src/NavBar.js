@@ -9,6 +9,7 @@ export default function NavBar() {
 }
 
 const Title = styled.div`
+  width: 375px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -29,6 +29,7 @@ export default function Page2() {
         <>
           {e.days.map((newElement) => (
             <>
+              {console.log(e.title)}
               <Day key={newElement.id}>
                 {newElement.weekday} - {newElement.date}
               </Day>
@@ -56,8 +57,12 @@ export default function Page2() {
 const Body = styled.div`
   width: 375px;
   height: fit-content;
+  margin: auto auto;
   margin-bottom: 170px;
   position: relative;
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 const SubTitle = styled.div`

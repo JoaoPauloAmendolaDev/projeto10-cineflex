@@ -4,6 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "./NavBar";
 
+export let clientChoice;
+export let assentsChoice = []
+export let movieAndSession
+
 export default function Page3() {
   const [sits, setSits] = useState([]);
   let { idSessao } = useParams();
@@ -17,7 +21,7 @@ export default function Page3() {
       .get(
         `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`
       )
-      .then((e) => setSits([e.data]))
+      .then((e) => confirmFilm(e.data) )
       .catch((e) => fail(e));
   }, []);
 
@@ -39,24 +43,39 @@ export default function Page3() {
     alert("O assento já foi selecionado, por favor, escolha um disponível.");
   }
 
+  function confirmFilm(value){
+    setSits([value])
+    console.log(value)
+    movieAndSession = {
+      day: value.day.date, 
+      filmName: value.movie.title,
+      hour: value.name
+    }
+    console.log(movieAndSession)
+  }
+
   function post() {
-    console.log(nameValue, cpfValue, clickedSeatID);
     if (clickedSeatID.length === 0) {
       return alert("Por favor, selecione os assentos que deseja");
     }
     if (nameValue === "" || cpfValue === "") {
       return alert("Por favor, preencha os campos Nome e CPF");
     }
-    let clientChoice = {
-      ids:  clickedSeatID ,
+    clientChoice = {
+      ids: clickedSeatID,
       name: nameValue,
       cpf: cpfValue,
     };
-    console.log(clientChoice)
+    
+
+    console.log(clientChoice);
     axios
-    .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', clientChoice )
-    .then(() => console.log('sucess'))
-    .catch(() => console.log('fail'))
+      .post(
+        "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
+        clientChoice
+      )
+      .then(() => <Link to="/sucesso"> </Link>)
+      .catch(() => console.log("fail"));
   }
 
   console.log(sits);
@@ -69,17 +88,21 @@ export default function Page3() {
 
       {sits.map((e) => (
         <>
-          {console.log(e)}
           <Chair>
             {e.seats.map((newValue) => (
+              
               <div
                 key={newValue.id}
+                
                 onClick={() =>
+                  
                   newValue.isAvailable
                     ? setClickedValue(
+                      
                         [...clickedValue, newValue.name],
-                        setClickedSeatID(() => [...clickedSeatID, newValue.id])
-                      )
+                        setClickedSeatID(() => [...clickedSeatID, newValue.id]),
+                        assentsChoice = [...assentsChoice, newValue.name]
+                        )
                     : wrongClick()
                 }
               >
@@ -125,9 +148,22 @@ export default function Page3() {
               ></input>
             </div>
           </Inputs>
-          <Post onClick={() => post()}>
-            <p>Reservar assento(s)</p>
-          </Post>
+          {clickedSeatID.length !== 0 && nameValue !== "" && cpfValue !== "" ? (
+            <Link to="/sucesso">
+              <Post onClick={() => post()}>
+                <p>Reservar assento(s)</p>
+              </Post>
+            </Link>
+          ) : (
+            <Post
+              onClick={() =>
+                alert("Preencha os campos como nome, assentos e CPF")
+              }
+            >
+              <p>Reservar assento(s)</p>
+            </Post>
+          )}
+
           <Footer>
             <div id="movieDiv">
               <img src={e.movie.posterURL} />
@@ -150,6 +186,9 @@ const Body = styled.div`
   height: fit-content;
   margin-bottom: 170px;
   position: relative;
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 const Chair = styled.div`
@@ -286,6 +325,10 @@ const Post = styled.div`
   margin: auto auto;
   margin-top: 57px;
   color: #ffffff;
+  text-decoration-line: none !important;
+  p {
+    text-decoration-line: none !important;
+  }
 `;
 
 const Footer = styled.div`
