@@ -1,3 +1,15 @@
+# Projeto criado por João Paulo S. Amendola
+
+Este projeto tem o objetivo de simular um App para comprar ingressos para o cinema, as tecnologias utilizadas nele foram React, Javascript, Styled-Components e HTML.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Project created by João Paulo S. Amendola
+
+This project aims to simulate an App to buy movie tickets, the technologies used in it were React, Javascript, Styled-Components and HTML.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
